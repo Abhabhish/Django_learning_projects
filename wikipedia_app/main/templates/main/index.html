@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wiki-search</title>
+</head>
+<body>
+    <h1>Wikipedia Search</h1><br><br>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="topic" >
+        <input type="submit" value="Serach">
+    </form><br><br>
+    <p>{{ summary }}</p>
+</body>
+</html>

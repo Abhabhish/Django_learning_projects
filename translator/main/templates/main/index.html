@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+</head>
+<body>
+    <form action method="POST">
+        {% csrf_token %}
+        <input type="text" name="text" placeholder="enter text"><br>
+        <select name="language" required>
+            <option value="Hindi">Hindi</option>
+            <option value="Marathi">Marathi</option>
+        </select><br>
+        <input type="submit" value="Translate">
+    </form>
+</body>
+</html>

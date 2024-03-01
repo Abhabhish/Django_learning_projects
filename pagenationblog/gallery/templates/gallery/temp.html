@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Center the heading */
+        h1 {
+            text-align: center;
+        }
+
+        /* Style for cards */
+        .card {
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 8px 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-danger:hover,
+        .btn-primary:hover {
+            filter: brightness(90%);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>PRODUCT LIST</h1>
+    <div class="container">
+        <div class="row">
+            {% for product in page_obj.object_list %}
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="{% url 'product_details' product.id %}">
+                        <img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.short_description }}</p>
+                        <p class="card-text"><small class="text-muted">Created at: {{ product.created_at|date:"F d, Y" }}</small></p>
+                        <p class="card-text"><small class="text-muted">Updated at: {{ product.updated_at|date:"F d, Y" }}</small></p>
+                        <div class="card-actions">
+                            <a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <center>
+        {% if page_obj.has_previous  %}
+        <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+        <span>{{page_obj.number}}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">Next</a>
+        {% endif %}
+    </center>
+</body>
+
+</html>
