@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .product-list {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap to the next row if necessary */
+            justify-content: space-between; /* Space items evenly along the main axis */
+            list-style: none; /* Remove list styles */
+            padding: 0;
+        }
+ 
+        .product-item{
+            flex: 1;
+            max-width: 30%;
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+ 
+        /* Style the "Buy Now" button */
+        .buy-now-button {
+            display: block;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <ul class="product-list">
+        {% for item in cart_items %}
+        <li class="product-item">
+            <img src="{{item.product.image.url}}" alt="{{item.product.name}}" width="100">
+            <p>{{item.product.name}} ({{ item.quantity }})</p>
+            <p>Price: ${{ item.product.price }}</p>
+            <a href="#" class="buy-now-button">Buy Now</a>
+            <a href="{% url 'cart:remove_from_cart' item.id %}">Remove</a>
+        </li>
+        {% empty %}
+        <p>your cart is empty.</p>
+        {% endfor %}
+    </ul>
+    <p>Total Price: ${{ total_price }}</p>
+
+    <a href="{% url 'cart:product_list' %}">Continue Shopping</a>
+</body>
+</html>
